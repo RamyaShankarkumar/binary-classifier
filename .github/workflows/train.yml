@@ -1,33 +1,40 @@
-name: PyTorch CI Training
+name: Train and Inference Pipeline
 
 on:
-  workflow_dispatch:  # manual trigger, fast and safe
+  workflow_dispatch:
 
 jobs:
-  train:
+  train-and-infer:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run training
-        run: python main.py
-
-      - name: Upload trained model
-        uses: actions/upload-artifact@v4
-        with:
-          name: trained-model
-          path: best_model.pth
+      - name: Train model
+        run: python train.py
 
       - name: Run inference
         run: python inference.py
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: model.pth
+
+      - name: Upload predictions artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: predictions
+          path: predictions.csv
