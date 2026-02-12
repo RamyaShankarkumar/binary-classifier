@@ -9,11 +9,11 @@ class MyModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.network = nn.Sequential(
-            nn.Linear(4, 16),  # input size = 4 (adjust if different)
+            nn.Linear(30, 16),  # input size = 4 (adjust if different)
             nn.ReLU(),
-            nn.Linear(16, 16),
+            nn.Linear(16, 8),
             nn.ReLU(),
-            nn.Linear(16, 3))
+            nn.Linear(8, 1))
 
     def forward(self, x):
         return self.networ(x)
