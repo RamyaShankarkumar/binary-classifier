@@ -13,7 +13,7 @@ class MyModel(nn.Module):
             nn.ReLU(),
             nn.Linear(16, 16),
             nn.ReLU(),
-            nn.Linear(16, 3)
+            nn.Linear(16, 3))
 
     def forward(self, x):
         return self.networ(x)
