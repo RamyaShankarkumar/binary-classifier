@@ -26,3 +26,10 @@ jobs:
 
       - name: Run training
         run: python main.py
+
+      - name: Upload trained model
+        uses: actions/upload-artifact@v3
+        with:
+        name: trained-model
+        path: best_model.pth
+
