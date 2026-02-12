@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import pandas as pd
 
 # ------------------------------
 # 1️⃣ Define the SAME model architecture
@@ -7,15 +8,15 @@ import torch.nn as nn
 class MyModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.fc1 = nn.Linear(4, 16)  # adjust input size if different
-        self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(16, 3)  # adjust output size if different
+        self.network = nn.Sequential(
+            nn.Linear(4, 16),  # input size = 4 (adjust if different)
+            nn.ReLU(),
+            nn.Linear(16, 16),
+            nn.ReLU(),
+            nn.Linear(16, 3)
 
     def forward(self, x):
-        x = self.fc1(x)
-        x = self.relu(x)
-        x = self.fc2(x)
-        return x
+        return self.networ(x)
 
 # ------------------------------
 # 2️⃣ Load trained model
@@ -45,3 +46,13 @@ with torch.no_grad():
 
 print("Raw outputs:\n", outputs)
 print("Predicted classes:", predictions.tolist())
+
+# ------------------------------
+# 5️⃣ Save predictions as CSV (artifact)
+# ------------------------------
+df = pd.DataFrame({
+    "sample_index": range(len(sample_inputs)),
+    "predicted_class": predictions.tolist()
+})
+df.to_csv("predictions.csv", index=False)
+print("✅ Predictions saved to predictions.csv")
