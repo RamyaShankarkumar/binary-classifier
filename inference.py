@@ -16,7 +16,7 @@ class MyModel(nn.Module):
             nn.Linear(8, 1))
 
     def forward(self, x):
-        return self.networ(x)
+        return self.network(x)
 
 # ------------------------------
 # 2️⃣ Load trained model
