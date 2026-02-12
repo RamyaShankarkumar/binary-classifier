@@ -25,6 +25,10 @@ def main():
     best_val_loss = float("inf")
     patience_counter = 0
 
+    torch.save(model.state_dict(), "best_model.pth")
+    print("Model saved as best_model.pth")
+
+
     for epoch in range(Config.epochs):
         train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device)
         val_loss, val_acc = evaluate(model, val_loader, criterion, device)
