@@ -1,18 +1,26 @@
 import torch
+import torch.nn as nn
+import torch.optim as optim
+from models.model import MyModel
 
-def train_one_epoch(model, loader, criterion, optimizer, device):
-    model.train()
-    total_loss = 0
+# Dummy dataset
+X = torch.randn(100, 30)
+y = torch.randint(0, 2, (100, 1)).float()
 
-    for X, y in loader:
-        X, y = X.to(device), y.to(device)
+model = MyModel(input_size=30)
+criterion = nn.BCEWithLogitsLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-        optimizer.zero_grad()
-        outputs = model(X)
-        loss = criterion(outputs, y)
-        loss.backward()
-        optimizer.step()
+# Training loop
+for epoch in range(10):
+    outputs = model(X)
+    loss = criterion(outputs, y)
 
-        total_loss += loss.item()
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
 
-    return total_loss / len(loader)
+print("Training complete")
+
+torch.save(model.state_dict(), "model.pth")
+print("Model saved as model.pth")
