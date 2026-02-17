@@ -5,7 +5,7 @@ from models.model import MyModel
 
 # Hyperparameters
 INPUT_SIZE = 30
-EPOCHS = 10
+EPOCHS = 50
 LR = 0.001
 
 # Dummy dataset
